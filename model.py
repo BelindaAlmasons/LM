@@ -10,8 +10,15 @@ from sklearn.metrics import mean_squared_error, r2_score
  
 MODEL_FILE = 'warehouse_xgb_model.pkl'
  
+#def load_data(file_path="updated_warehouse_data_fixed.xlsx"):
+#    return pd.read_excel(file_path)
+
 def load_data(file_path="updated_warehouse_data_fixed.xlsx"):
-    return pd.read_excel(file_path)
+    if not os.path.exists(file_path):
+        raise FileNotFoundError(f"File not found: {file_path}")
+    if not file_path.endswith(".xlsx"):
+        raise ValueError("Expected .xlsx file format")
+    return pd.read_excel(file_path, engine='openpyxl')
  
 def categorize_temperature(temp):
     """
